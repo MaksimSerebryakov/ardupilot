@@ -2107,15 +2107,21 @@ void AP_OSD_Screen::draw_clk(uint8_t x, uint8_t y)
 #if HAL_PLUSCODE_ENABLE
 void AP_OSD_Screen::draw_pluscode(uint8_t x, uint8_t y)
 {
-    AP_GPS & gps = AP::gps();
-    const Location &loc = gps.location();
-    char buff[16];
-    if (gps.status() == AP_GPS::NO_GPS || gps.status() == AP_GPS::NO_FIX){
-        backend->write(x, y, false, "--------+--");
-    } else {
-        AP_OLC::olc_encode(loc.lat, loc.lng, 10, buff, sizeof(buff));
-        backend->write(x, y, false, "%s", buff);
-    }
+    int32_t lat = AP_OLC::get_sk42_lat();
+    int32_t lon = AP_OLC::get_sk42_lon();
+
+    int32_t lat_dec_portion, lat_frac_portion, lon_dec_portion, lon_frac_portion;
+    int32_t abs_lat = labs(lat);
+    int32_t abs_lon = labs(lon);
+
+    lat_dec_portion = lat / 10000000L;
+    lat_frac_portion = abs_lat - labs(lat_dec_portion)*10000000UL;
+    lon_dec_portion = lon / 10000000L;
+    lon_frac_portion = abs_lon - labs(lon_dec_portion)*10000000UL;
+
+    
+    backend->write(x, y, false, "%ld.%ld\n%ld.%ld", lat_dec_portion, lat_frac_portion, lon_dec_portion, lon_frac_portion);
+    
 }
 #endif
 

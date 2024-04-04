@@ -202,4 +202,20 @@ int AP_OLC::olc_encode(int32_t lat, int32_t lon, size_t length, char *buf, size_
     return pos;
 }
 
+int32_t AP_OLC::get_sk42_lat()
+{
+    return sk42_lat;
+}
+
+int32_t AP_OLC::get_sk42_lon()
+{
+    return sk42_lon;
+}
+
+void AP_OLC::set_sk42_coordinates(int32_t lat, int32_t lon)
+{
+    sk42_lat = lat;
+    sk42_lon = lon;
+}
+
 #endif 
