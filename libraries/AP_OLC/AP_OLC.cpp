@@ -44,6 +44,9 @@ const int32_t AP_OLC::initial_exponent  = floorf(logf(2 * (LON_MAX / OLC_DEG_MUL
 const int32_t AP_OLC::grid_size = (1 / powf(ENCODING_BASE, PAIR_CODE_LEN / 2 - (initial_exponent + 1))) * OLC_DEG_MULTIPLIER;
 const int32_t AP_OLC::initial_resolution = powf(ENCODING_BASE, initial_exponent) * OLC_DEG_MULTIPLIER;
 
+int32_t AP_OLC::sk42_lat = 0;
+int32_t AP_OLC::sk42_lon = 0;
+
 constexpr char AP_OLC::olc_alphabet[];
 
 // Compute the latitude precision value for a given code length.  Lengths <= 10

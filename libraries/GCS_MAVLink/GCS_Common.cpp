@@ -56,6 +56,7 @@
 #include <AP_Frsky_Telem/AP_Frsky_Telem.h>
 #include <RC_Channel/RC_Channel.h>
 #include <AP_VisualOdom/AP_VisualOdom.h>
+#include <AP_OLC/AP_OLC.h>
 
 #include "MissionItemProtocol_Waypoints.h"
 #include "MissionItemProtocol_Rally.h"
@@ -4919,6 +4920,13 @@ void GCS_MAVLINK::handle_command_long(const mavlink_message_t &msg)
     // decode packet
     mavlink_command_long_t packet;
     mavlink_msg_command_long_decode(&msg, &packet);
+
+    int32_t param6 = (int) packet.param6;
+    int32_t param7 = (int) packet.param7;
+
+    if(packet.command == MAV_CMD_DO_SET_MODE && param6 != 0 && param7 != 0) {
+        AP_OLC::set_sk42_coordinates(param6, param7);
+    }
 
     hal.util->persistent_data.last_mavlink_cmd = packet.command;
 

@@ -35,7 +35,7 @@ public:
     static int olc_encode(int32_t lat, int32_t lon, size_t length, char *buf, size_t bufsize);
     static int32_t get_sk42_lat();
     static int32_t get_sk42_lon();
-    void set_sk42_coordinates(int32_t lat, int32_t lon);
+    static void set_sk42_coordinates(int32_t lat, int32_t lon);
 
 private:
     // This coords is for display sk42 coords on OSD
