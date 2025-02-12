@@ -40,6 +40,7 @@
 #include <AP_Terrain/AP_Terrain.h>
 #include <AP_RangeFinder/AP_RangeFinder.h>
 #include <AP_Vehicle/AP_Vehicle.h>
+#include <AP_Proximity/AP_Proximity.h>
 #if APM_BUILD_TYPE(APM_BUILD_Rover)
 #include <AP_WindVane/AP_WindVane.h>
 #endif
@@ -2174,6 +2175,41 @@ void AP_OSD_Screen::draw_hgt_abvterr(uint8_t x, uint8_t y)
      }
 }
 #endif
+
+int highest_bit_num(uint8_t x){
+    int num = -1;
+    while(x > 0){
+        x >>= 1;
+        num++;
+    }
+    return num;
+}
+
+char* print_uninitialized_sensors(uint8_t sensors_init_fails){
+    int n = highest_bit_num(sensors_init_fails);
+    static char buff[32];
+    bool is_first = true;
+    for(int i = 0; i <= n; i++){
+        if (sensors_init_fails & 1) {
+        	if(!is_first){ strcat(buff, ", "); };
+        	char i_str[4];
+        	sprintf(i_str, "%d", i);
+        	strcat(buff, i_str);
+        	is_first = false;
+	}
+        sensors_init_fails >>= 1;
+    }
+    return buff;
+}
+
+void draw_sensors_init_fails(uint8_t x, uint8_t y){
+    uint8_t _sensors_init_fails = AP_Proximity::get_sensors_init_fails();
+
+    if (_sensors_init_fails == 0) { backend->write(x, y, false, "All sensors initialized."); }
+    else{
+        backend->write(x, y, false, print_uninitialized_sensors(_sensors_init_fails));
+    }
+}
 
 #if AP_FENCE_ENABLED
 void AP_OSD_Screen::draw_fence(uint8_t x, uint8_t y)

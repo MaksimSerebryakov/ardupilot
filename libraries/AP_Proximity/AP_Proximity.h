@@ -78,6 +78,9 @@ public:
     // return the number of proximity sensor backends
     uint8_t num_sensors() const { return num_instances; }
 
+    static void set_sensors_init_fails(uint8_t sensors_init_fails);
+    static uint8_t get_sensors_init_fails();
+
     // return sensor type of a given instance
     Type get_type(uint8_t instance) const;
 
@@ -190,6 +193,8 @@ private:
     AP_Int8 _ign_gnd_enable;                           // true if land detection should be enabled
     AP_Float _filt_freq;                               // cutoff frequency for low pass filter
     AP_Float _alt_min;                                 // Minimum altitude -in meters- below which proximity should not work.
+
+    static uint8_t _sensors_init_fails;
 
     // get alt from rangefinder in meters. This reading is corrected for vehicle tilt
     bool get_rangefinder_alt(float &alt_m) const;

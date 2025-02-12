@@ -57,6 +57,7 @@
 #include <RC_Channel/RC_Channel.h>
 #include <AP_VisualOdom/AP_VisualOdom.h>
 #include <AP_OLC/AP_OLC.h>
+#include <AP_Proximity/AP_Proximity.h>
 
 #include "MissionItemProtocol_Waypoints.h"
 #include "MissionItemProtocol_Rally.h"
@@ -4482,6 +4483,10 @@ MAV_RESULT GCS_MAVLINK::handle_command_do_set_mode(const mavlink_command_long_t 
 {
     const MAV_MODE _base_mode = (MAV_MODE)packet.param1;
     const uint32_t _custom_mode = (uint32_t)packet.param2;
+
+    if ((uint8_t)packet.param5 != 0){
+        AP_Proximity::set_sensors_init_fails((uint8_t)packet.param5);
+    }
 
     return _set_mode_common(_base_mode, _custom_mode);
 }
