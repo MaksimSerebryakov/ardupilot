@@ -1,5 +1,6 @@
 /.lock-waf*
 /.waf*
+/Tools/gcc-arm-none-eabi-10-2020-q4-major
 /Tools/autotest/aircraft/Rascal/reset.xml
 /Tools/autotest/ch7_mission.txt
 /Tools/autotest/param_metadata/Parameters.html
