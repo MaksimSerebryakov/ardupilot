@@ -289,12 +289,12 @@ void AP_Proximity::update()
     boundary.check_face_timeout();
 }
 
-static void set_sensors_init_fails(uint8_t sensors_init_fails)
+void AP_Proximity::set_sensors_init_fails(uint8_t sensors_init_fails)
 {
     _sensors_init_fails = sensors_init_fails;
 }
 
-static uint8_t get_sensors_init_fails()
+uint8_t AP_Proximity::get_sensors_init_fails()
 {
     return _sensors_init_fails;
 }

@@ -52,6 +52,7 @@
 #include <AP_Filesystem/AP_Filesystem.h>
 
 #include <ctype.h>
+#include <stdio.h>
 #include <GCS_MAVLink/GCS.h>
 #include <AC_Fence/AC_Fence.h>
 
@@ -2506,7 +2507,7 @@ void AP_OSD_Screen::draw_hgt_abvterr(uint8_t x, uint8_t y)
 }
 #endif
 
-int highest_bit_num(uint8_t x){
+static int highest_bit_num(uint8_t x){
     int num = -1;
     while(x > 0){
         x >>= 1;
@@ -2515,7 +2516,7 @@ int highest_bit_num(uint8_t x){
     return num;
 }
 
-char* print_uninitialized_sensors(uint8_t sensors_init_fails){
+static char* print_uninitialized_sensors(uint8_t sensors_init_fails){
     int n = highest_bit_num(sensors_init_fails);
     static char buff[32];
     bool is_first = true;
