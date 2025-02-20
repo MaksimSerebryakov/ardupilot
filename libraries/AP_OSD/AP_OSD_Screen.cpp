@@ -2524,7 +2524,7 @@ static char* print_uninitialized_sensors(uint8_t sensors_init_fails){
         if (sensors_init_fails & 1) {
         	if(!is_first){ strcat(buff, ", "); };
         	char i_str[4];
-        	sprintf(i_str, "%d", i);
+        	snprintf(i_str, sizeof(i_str), "%d", i);
         	strcat(buff, i_str);
         	is_first = false;
 	}
@@ -2533,12 +2533,12 @@ static char* print_uninitialized_sensors(uint8_t sensors_init_fails){
     return buff;
 }
 
-void draw_sensors_init_fails(uint8_t x, uint8_t y){
+void AP_OSD_Screen::draw_sensors_init_fails(uint8_t x, uint8_t y){
     uint8_t _sensors_init_fails = AP_Proximity::get_sensors_init_fails();
 
     if (_sensors_init_fails == 0) { backend->write(x, y, false, "All sensors initialized."); }
     else{
-        backend->write(x, y, false, print_uninitialized_sensors(_sensors_init_fails));
+        backend->write(x, y, false, "%s", print_uninitialized_sensors(_sensors_init_fails));
     }
 }
 

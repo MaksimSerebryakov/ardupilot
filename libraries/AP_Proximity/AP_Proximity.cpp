@@ -35,6 +35,8 @@
 
 #include <AP_Logger/AP_Logger.h>
 
+uint8_t AP_Proximity::_sensors_init_fails = 0;
+
 extern const AP_HAL::HAL &hal;
 
 // table of user settable parameters
